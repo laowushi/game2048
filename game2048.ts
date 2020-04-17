@@ -114,8 +114,8 @@ class Grid extends Matrix{
         let sumrow = this.sum_row_left(nums)
         let sumrow_len = sumrow.length
         // test
-        console.log(nums)
-        console.log(sumrow)
+        // console.log(nums)
+        // console.log(sumrow)
         
         for (let pd=row_len-sumrow_len;pd>0;pd-=1) {
             sumrow.push(0)

@@ -128,8 +128,8 @@ var Grid = /** @class */ (function (_super) {
         var sumrow = this.sum_row_left(nums);
         var sumrow_len = sumrow.length;
         // test
-        console.log(nums);
-        console.log(sumrow);
+        // console.log(nums)
+        // console.log(sumrow)
         for (var pd = row_len - sumrow_len; pd > 0; pd -= 1) {
             sumrow.push(0);
         }

@@ -63,6 +63,17 @@ var Matrix = /** @class */ (function () {
         }
         return max;
     };
+    Matrix.prototype.min = function () {
+        var min = this.get(0, 0);
+        for (var y = 0; y < this.height; y += 1) {
+            for (var x = 0; x < this.width; x += 1) {
+                if (this.get(x, y) < min) {
+                    min = this.get(x, y);
+                }
+            }
+        }
+        return min;
+    };
     Matrix.prototype.rotate_90 = function () {
         var dt = [];
         for (var x = this.width - 1; x >= 0; x -= 1) {
@@ -174,6 +185,12 @@ var Grid = /** @class */ (function (_super) {
         }
         return false;
     };
+    Grid.prototype.is_lose = function () {
+        if (this.min() > 0) {
+            return true;
+        }
+        return false;
+    };
     return Grid;
 }(Matrix));
 // render
@@ -207,15 +224,21 @@ var render = function (grd, cvs) {
 };
 // main
 function main() {
-    var g = new Grid(8, 8);
+    var g = new Grid(5, 5);
     g.update_value(2, 8);
     var the_canvas = document.getElementById("canvas");
     var the_ctx = the_canvas.getContext('2d');
     setInterval(function () {
         if (g.is_win()) {
-            the_ctx.fillStyle = "whitle";
+            the_ctx.fillStyle = "yellow";
             the_ctx.font = "64px serif";
             the_ctx.fillText("You Win!", the_canvas.width / 4, the_canvas.height / 2);
+            return;
+        }
+        if (g.is_lose()) {
+            the_ctx.fillStyle = "grey";
+            the_ctx.font = "64px serif";
+            the_ctx.fillText("You Lose!", the_canvas.width / 4, the_canvas.height / 2);
             return;
         }
         render(g, the_canvas);

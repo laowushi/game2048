@@ -54,7 +54,18 @@ class Matrix {
         }
         return max;
     }
-    rotate_90(){
+    min(): number {
+        let min = this.get(0, 0)
+        for (let y=0; y<this.height; y+=1) {
+            for (let x=0; x<this.width; x+=1) {
+                if (this.get(x, y)<min) {
+                    min = this.get(x, y)
+                }
+            }
+        }
+        return min;
+    }
+    rotate_90() {
         let dt = []
         for (let x=this.width-1; x>=0; x-=1) {
             dt.push(this.get_col(x))
@@ -155,8 +166,14 @@ class Grid extends Matrix{
             this.set(x, y, v)
         }
     }
-    is_win():boolean {
+    is_win(): boolean {
         if (this.max() >= 2048) {
+            return true
+        }
+        return false
+    }
+    is_lose(): boolean {
+        if (this.min() > 0) {
             return true
         }
         return false
@@ -197,15 +214,21 @@ const render = (grd: Grid, cvs:HTMLCanvasElement) => {
 
 // main
 function main() {
-    let g = new Grid(8, 8)
+    let g = new Grid(5, 5)
     g.update_value(2, 8)
     let the_canvas= <HTMLCanvasElement>document.getElementById("canvas")
     let the_ctx =  the_canvas.getContext('2d')
     setInterval(()=>{
         if (g.is_win()) {
-            the_ctx.fillStyle = "whitle"
+            the_ctx.fillStyle = "yellow"
             the_ctx.font = "64px serif"
             the_ctx.fillText("You Win!", the_canvas.width/4, the_canvas.height/2)
+            return;
+        }
+        if (g.is_lose()) {
+            the_ctx.fillStyle = "grey"
+            the_ctx.font = "64px serif"
+            the_ctx.fillText("You Lose!", the_canvas.width/4, the_canvas.height/2)
             return;
         }
         render(g, the_canvas)

@@ -15,7 +15,8 @@ var Matrix = /** @class */ (function () {
     function Matrix(w, h) {
         this.width = w;
         this.height = h;
-        this.data = this.init(0);
+        // this.data = this.init(0);
+        this.init(0);
     }
     Matrix.prototype.init = function (v) {
         var dt = new Array(this.height);
@@ -27,7 +28,7 @@ var Matrix = /** @class */ (function () {
                 dt[y][x] = v;
             }
         }
-        return dt;
+        this.data = dt;
     };
     Matrix.prototype.get = function (x, y) {
         if (this.data.length === 0 || x >= this.width || y >= this.height) {
@@ -67,11 +68,6 @@ var Matrix = /** @class */ (function () {
         for (var x = this.width - 1; x >= 0; x -= 1) {
             dt.push(this.get_col(x));
         }
-        // for (let y=0;y<this.height;y+=1) {
-        //     for (let x=0; x<this.width; x+=1) {
-        //         this.data[y][x] = dt[y][x]
-        //     }
-        // }
         this.data = dt;
     };
     Matrix.prototype.rotate_180 = function () {
@@ -85,17 +81,6 @@ var Matrix = /** @class */ (function () {
     };
     return Matrix;
 }());
-// let m = new Matrix(4, 4)
-// console.log(m)
-// // console.log(m.get(3, 8))
-// m.set(3, 3, 2)
-// m.set(0, 0, 4)
-// m.set(3, 0, 3)
-// m.set(0, 3, 1)
-// // console.log(m.get(3, 8))
-// console.log(m)
-// m.rotate_90()
-// console.log(m)
 var Grid = /** @class */ (function (_super) {
     __extends(Grid, _super);
     function Grid(w, h) {
@@ -211,9 +196,7 @@ var render = function (grd, cvs) {
                 var r = ((v * 24) % 255).toString();
                 var g = ((v * 12) % 255).toString();
                 var b = ((v * 4) % 255).toString();
-                // ctx.fillStyle = 'rgb(' + color_degree.toString() + ',' + 0 + ',' + 0 + ')'
                 ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
-                // ctx.fillStyle =  "red"
                 ctx.fillRect(pos_x, pos_y, bw, bh);
                 ctx.fillStyle = "white";
                 ctx.font = "12px serif";
@@ -222,13 +205,10 @@ var render = function (grd, cvs) {
         }
     }
 };
-// 测试
+// main
 function main() {
     var g = new Grid(8, 8);
     g.update_value(2, 8);
-    // console.log(g)
-    // g.move_left()
-    // console.log(g)
     var the_canvas = document.getElementById("canvas");
     var the_ctx = the_canvas.getContext('2d');
     setInterval(function () {
@@ -242,5 +222,3 @@ function main() {
     }, 1000 / 30);
 }
 main();
-// g.move_left()
-// render(g, the_canvas)

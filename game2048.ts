@@ -5,10 +5,11 @@ class Matrix {
     constructor(w:number, h:number) {
         this.width = w;
         this.height = h;
-        this.data = this.init(0);
+        // this.data = this.init(0);
+        this.init(0)
     }
 
-    init(v:number): number[][] {
+    init(v:number): void{
         let dt = new Array(this.height)
         for (let y=0; y<this.height; y+=1) {
             dt[y] = new Array(this.width)
@@ -18,7 +19,7 @@ class Matrix {
                 dt[y][x] = v
             }
         }
-        return dt;
+        this.data = dt;
     }
 
     get(x:number, y:number): number {
@@ -58,11 +59,6 @@ class Matrix {
         for (let x=this.width-1; x>=0; x-=1) {
             dt.push(this.get_col(x))
         }
-        // for (let y=0;y<this.height;y+=1) {
-        //     for (let x=0; x<this.width; x+=1) {
-        //         this.data[y][x] = dt[y][x]
-        //     }
-        // }
         this.data = dt
     }
     rotate_180() {
@@ -76,17 +72,6 @@ class Matrix {
     }
 }
 
-// let m = new Matrix(4, 4)
-// console.log(m)
-// // console.log(m.get(3, 8))
-// m.set(3, 3, 2)
-// m.set(0, 0, 4)
-// m.set(3, 0, 3)
-// m.set(0, 3, 1)
-// // console.log(m.get(3, 8))
-// console.log(m)
-// m.rotate_90()
-// console.log(m)
 class Grid extends Matrix{
     constructor(w:number, h:number) {
         super(w, h)
@@ -200,7 +185,6 @@ const render = (grd: Grid, cvs:HTMLCanvasElement) => {
                 let g = ((v*12) % 255).toString()
                 let b = ((v*4) % 255).toString()
                 ctx.fillStyle = 'rgb('+ r + ',' + g + ',' + b + ')'
-                // ctx.fillStyle =  "red"
                 ctx.fillRect(pos_x, pos_y, bw, bh)
                 ctx.fillStyle = "white"
                 ctx.font = "12px serif"
@@ -210,14 +194,11 @@ const render = (grd: Grid, cvs:HTMLCanvasElement) => {
         }
     }
 }
-// 测试
 
+// main
 function main() {
     let g = new Grid(8, 8)
     g.update_value(2, 8)
-    // console.log(g)
-    // g.move_left()
-    // console.log(g)
     let the_canvas= <HTMLCanvasElement>document.getElementById("canvas")
     let the_ctx =  the_canvas.getContext('2d')
     setInterval(()=>{
@@ -229,9 +210,6 @@ function main() {
         }
         render(g, the_canvas)
     }, 1000/30)
-
 }
 
 main()
-// g.move_left()
-// render(g, the_canvas)

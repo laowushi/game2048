@@ -171,7 +171,7 @@ class Grid extends Matrix{
         }
     }
     is_win():boolean {
-        if (this.max() >= 128) {
+        if (this.max() >= 2048) {
             return true
         }
         return false
@@ -191,19 +191,18 @@ const render = (grd: Grid, cvs:HTMLCanvasElement) => {
             let pos_x = (bw+1) * x
             let pos_y = (bh+1) * y
             if (grd.get(x, y) == 0) {
-                    ctx.fillStyle = 'rgb(128, 64, 0)'
+                    ctx.fillStyle = 'rgb(255, 0, 128)'
                     ctx.fillRect(pos_x, pos_y, bw, bh)
             } else  if (grd.get(x, y)>=2){                
                 let v = grd.get(x, y)
                 
-                let r = ((v * 64) % 255).toString()
-                let g = ((v  * 32) % 255).toString()
-                let b = ((v * 32) % 255).toString()
-                // ctx.fillStyle = 'rgb(' + color_degree.toString() + ',' + 0 + ',' + 0 + ')'
-                // ctx.fillStyle = 'rgb(255, 128, 64)'
-                ctx.fillStyle =  "red"
+                let r = ((v*24) % 255).toString()
+                let g = ((v*12) % 255).toString()
+                let b = ((v*4) % 255).toString()
+                ctx.fillStyle = 'rgb('+ r + ',' + g + ',' + b + ')'
+                // ctx.fillStyle =  "red"
                 ctx.fillRect(pos_x, pos_y, bw, bh)
-                ctx.fillStyle = "black"
+                ctx.fillStyle = "white"
                 ctx.font = "12px serif"
                 ctx.fillText(grd.get(x, y).toString(), pos_x + bw/2, pos_y + bh/2)
             }
@@ -223,9 +222,9 @@ function main() {
     let the_ctx =  the_canvas.getContext('2d')
     setInterval(()=>{
         if (g.is_win()) {
-            the_ctx.fillStyle = "red"
-            the_ctx.font = "96px serif"
-            the_ctx.fillText("You Win!", the_canvas.width/2, the_canvas.height/2)
+            the_ctx.fillStyle = "whitle"
+            the_ctx.font = "64px serif"
+            the_ctx.fillText("You Win!", the_canvas.width/4, the_canvas.height/2)
             return;
         }
         render(g, the_canvas)

@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -181,7 +184,7 @@ var Grid = /** @class */ (function (_super) {
         }
     };
     Grid.prototype.is_win = function () {
-        if (this.max() >= 128) {
+        if (this.max() >= 2048) {
             return true;
         }
         return false;
@@ -200,19 +203,19 @@ var render = function (grd, cvs) {
             var pos_x = (bw + 1) * x;
             var pos_y = (bh + 1) * y;
             if (grd.get(x, y) == 0) {
-                ctx.fillStyle = 'rgb(128, 64, 0)';
+                ctx.fillStyle = 'rgb(255, 0, 128)';
                 ctx.fillRect(pos_x, pos_y, bw, bh);
             }
             else if (grd.get(x, y) >= 2) {
                 var v = grd.get(x, y);
-                var r = ((v * 64) % 255).toString();
-                var g = ((v * 32) % 255).toString();
-                var b = ((v * 32) % 255).toString();
+                var r = ((v * 24) % 255).toString();
+                var g = ((v * 12) % 255).toString();
+                var b = ((v * 4) % 255).toString();
                 // ctx.fillStyle = 'rgb(' + color_degree.toString() + ',' + 0 + ',' + 0 + ')'
-                // ctx.fillStyle = 'rgb(255, 128, 64)'
-                ctx.fillStyle = "red";
+                ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+                // ctx.fillStyle =  "red"
                 ctx.fillRect(pos_x, pos_y, bw, bh);
-                ctx.fillStyle = "black";
+                ctx.fillStyle = "white";
                 ctx.font = "12px serif";
                 ctx.fillText(grd.get(x, y).toString(), pos_x + bw / 2, pos_y + bh / 2);
             }
@@ -230,9 +233,9 @@ function main() {
     var the_ctx = the_canvas.getContext('2d');
     setInterval(function () {
         if (g.is_win()) {
-            the_ctx.fillStyle = "red";
-            the_ctx.font = "96px serif";
-            the_ctx.fillText("You Win!", the_canvas.width / 2, the_canvas.height / 2);
+            the_ctx.fillStyle = "whitle";
+            the_ctx.font = "64px serif";
+            the_ctx.fillText("You Win!", the_canvas.width / 4, the_canvas.height / 2);
             return;
         }
         render(g, the_canvas);

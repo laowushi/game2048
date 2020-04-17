@@ -204,12 +204,12 @@ var render = function (grd, cvs) {
         for (var x = 0; x < w; x += 1) {
             var pos_x = (bw + 1) * x;
             var pos_y = (bh + 1) * y;
-            if (grd.get(x, y) == 0) {
+            var v = grd.get(x, y);
+            if (v == 0) {
                 ctx.fillStyle = 'rgb(255, 0, 128)';
                 ctx.fillRect(pos_x, pos_y, bw, bh);
             }
-            else if (grd.get(x, y) >= 2) {
-                var v = grd.get(x, y);
+            else if (v >= 2) {
                 var r = ((v * 24) % 255).toString();
                 var g = ((v * 12) % 255).toString();
                 var b = ((v * 4) % 255).toString();
@@ -217,7 +217,7 @@ var render = function (grd, cvs) {
                 ctx.fillRect(pos_x, pos_y, bw, bh);
                 ctx.fillStyle = "white";
                 ctx.font = "12px serif";
-                ctx.fillText(grd.get(x, y).toString(), pos_x + bw / 2, pos_y + bh / 2);
+                ctx.fillText(v.toString(), pos_x + bw / 2, pos_y + bh / 2);
             }
         }
     }
